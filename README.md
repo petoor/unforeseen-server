@@ -39,3 +39,6 @@ sudo apt install ntfs-3g exfat-fuse exfat-utils -y
 sudo pip -v install docker-compose
 
 # Edit the docker-compose.yml file to reflect which settings you want to use.
+If useing cvat run
+docker exec -it cvat bash -ic 'DJANGO_SUPERUSER_PASSWORD=admin123 python3 ~/manage.py createsuperuser --username=admin --email dummy@email.com --noinput'
+which will create a user with username admin and password admin123

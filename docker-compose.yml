@@ -33,3 +33,87 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_INSTALL_PLUGINS=innius-video-panel
     restart: always
+    
+  cvat_db:
+    container_name: cvat_db
+    image: postgres:10-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_DB: cvat
+      POSTGRES_HOST_AUTH_METHOD: trust
+    volumes:
+      - cvat_db:/var/lib/postgresql/data
+    networks:
+      - cvat
+
+  cvat_redis:
+    container_name: cvat_redis
+    image: redis:4.0-alpine
+    restart: always
+    networks:
+      - cvat
+
+  cvat:
+    container_name: cvat
+    image: openvino/cvat_server
+    restart: always
+    depends_on:
+      - cvat_redis
+      - cvat_db
+    environment:
+      DJANGO_MODWSGI_EXTRA_ARGS: ''
+      ALLOWED_HOSTS: '*'
+      CVAT_REDIS_HOST: 'cvat_redis'
+      CVAT_POSTGRES_HOST: 'cvat_db'
+      ADAPTIVE_AUTO_ANNOTATION: 'false'
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.cvat.loadbalancer.server.port=8080
+      - traefik.http.routers.cvat.rule=Host(`${CVAT_HOST:-localhost}`) &&
+          PathPrefix(`/api/`, `/git/`, `/opencv/`, `/analytics/`, `/static/`, `/admin`, `/documentation/`, `/django-rq`)
+      - traefik.http.routers.cvat.entrypoints=web
+    volumes:
+      - cvat_data:/home/django/data
+      - cvat_keys:/home/django/keys
+      - cvat_logs:/home/django/logs
+    networks:
+      - cvat
+
+  cvat_ui:
+    container_name: cvat_ui
+    image: openvino/cvat_ui
+    restart: always
+    depends_on:
+      - cvat
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.cvat-ui.loadbalancer.server.port=80
+      - traefik.http.routers.cvat-ui.rule=Host(`${CVAT_HOST:-localhost}`)
+      - traefik.http.routers.cvat-ui.entrypoints=web
+    networks:
+      - cvat
+
+  traefik:
+    image: traefik:v2.4
+    container_name: traefik
+    restart: always
+    command:
+      - "--providers.docker.exposedByDefault=false"
+      - "--providers.docker.network=cvat"
+      - "--entryPoints.web.address=:8080"
+    ports:
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - cvat
+
+volumes:
+  cvat_db:
+  cvat_data:
+  cvat_keys:
+  cvat_logs:
+
+networks:
+  cvat:
