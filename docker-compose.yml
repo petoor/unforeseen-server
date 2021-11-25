@@ -25,6 +25,10 @@ services:
       - '3000:3000'
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+      - ./grafana/config.ini:/etc/grafana/config.ini
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     depends_on:
       - influxdb
     environment:
@@ -109,6 +113,16 @@ services:
     networks:
       - cvat
 
+  prom:
+    image: prom/prometheus:v2.31.1
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prom/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prom/rules.yml:/etc/prometheus/rules.yml
+      - prometheus_data:/prometheus
+
+
 volumes:
   cvat_db:
   cvat_data:
@@ -116,6 +130,9 @@ volumes:
   cvat_logs:
   grafana-storage:
   influxdb-storage:
+  prometheus_data: {}
 
 networks:
   cvat:
+  default:
+      name: metrics-network
