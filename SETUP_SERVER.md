@@ -13,10 +13,20 @@ This guide should also work for e.g. Ubuntu 20.04 but **RASPBERRY PI IS ARM ARCH
 
 - Choose use Custom - use the rpi64 bit image you just downloaded.
 - press `ctrl + shift + x` and set up ssh access and wifi (if needed).
+- Choose your SD card and press write
+Insert the SD card and power on your raspberry pi.
+
+In your raspberry pi. Install the latest updates.
+`sudo apt update`
+`sudo apt full-upgrade`
+`sudo rpi-update`
+
+Enable usb booting. 
+`echo program_usb_boot_mode=1 | sudo tee -a /boot/config.txt`
 
 ### 3)  Go from SD card boot to Portable SSD/HDD boot.
 This is done in order to have the machine being stable. An SD card / USB Flash drive have a limited lifespan due to **write/erase cycles**, this means we can not write logs and continuous data. However there is no such limitation on SSD/HDD drives. 
-To boot from USB, 
+
 - plug in your USB SDD/HDD drive. (For instance a Samsung Portable SSD T5 - 500GB)
 - On the raspberry pi go to Accessories -> SD Card Copier.
 - Copy To Device and click start.
@@ -35,7 +45,7 @@ hostnamectl set-hostname SERVER_NAME
 `sudo apt install -y apt-utils python3.6 python3-pip`
 `sudo ln -sf /usr/bin/python3 /usr/bin/python && sudo ln -sf /usr/bin/pip3 /usr/bin/pip`
 
- ### 2) Install docker
+### 2) Install docker
 `curl -sSL https://get.docker.com | sh`
 `sudo usermod -aG docker ${USER}`
 
