@@ -53,6 +53,10 @@ This is done in order to have the machine being stable. An SD card / USB Flash d
 
 `sudo pip -v install docker-compose`
 
+Set correct permissions
+
+`sudo chmod 666 /var/run/docker.sock`
+
 ### 3) Edit the docker-compose.yml file to reflect which settings you want to use.
 Especially change the usernames and passwords. The default is admin and admin123. This is not considered secure.
 
