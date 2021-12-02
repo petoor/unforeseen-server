@@ -49,10 +49,6 @@ This is done in order to have the machine being stable. An SD card / USB Flash d
 
 
 ### 2) Install docker-compose
-If you use a **Rpi 3+** as server you need to remove the python-configparser this is **not needed for Rpi 4**
-`sudo apt-get remove python-configparser`
-
-Install docker-compose
 `sudo apt-get install -y libffi-dev libssl-dev -y`
 
 `sudo pip -v install docker-compose`
