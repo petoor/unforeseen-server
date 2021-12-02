@@ -7,8 +7,11 @@ This guide should also work for e.g. Ubuntu 20.04 but **RASPBERRY PI IS ARM ARCH
 
  ### 2) Download rpi-imager
 `wget https://downloads.raspberrypi.org/imager/imager_latest_amd64.deb`
+
 `sudo dpkg -i imager_latest_amd64.deb`
+
 `sudo apt-get install -f`
+
 `rpi-imager`
 
 - Choose use Custom - use the rpi64 bit image you just downloaded.
@@ -18,7 +21,9 @@ Insert the SD card and power on your raspberry pi.
 
 In your raspberry pi. Install the latest updates.
 `sudo apt update`
+
 `sudo apt full-upgrade`
+
 `sudo rpi-update`
 
 Enable usb booting. 
@@ -37,31 +42,25 @@ This is done in order to have the machine being stable. An SD card / USB Flash d
 ### From here on out we assume you are running the following commands from your Pi 
 ---
 
-### 0) *(Optional)* Set name of the sever to be more descriptive. 
-hostnamectl set-hostname SERVER_NAME
-
-### 1) Update and install python3.6 - set is as default python version.
-`sudo apt-get update -y && sudo apt-get upgrade -y`
-`sudo apt install -y apt-utils python3.6 python3-pip`
-`sudo ln -sf /usr/bin/python3 /usr/bin/python && sudo ln -sf /usr/bin/pip3 /usr/bin/pip`
-
-### 2) Install docker
+### 1) Install docker
 `curl -sSL https://get.docker.com | sh`
+
 `sudo usermod -aG docker ${USER}`
 
 
-### 3) Install docker-compose
+### 2) Install docker-compose
 If you use a **Rpi 3+** as server you need to remove the python-configparser this is **not needed for Rpi 4**
 `sudo apt-get remove python-configparser`
 
 Install docker-compose
 `sudo apt-get install -y libffi-dev libssl-dev -y`
+
 `sudo pip -v install docker-compose`
 
-### 4) Edit the docker-compose.yml file to reflect which settings you want to use.
+### 3) Edit the docker-compose.yml file to reflect which settings you want to use.
 Especially change the usernames and passwords. The default is admin and admin123. This is not considered secure.
 
-### 5) Check the everything is working.
+### 4) Check the everything is working.
 `docker-compose up -d`
 
 To create a cvat user run:
