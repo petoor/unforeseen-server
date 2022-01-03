@@ -73,9 +73,8 @@ Run `hostname -I | awk '{print $1}'` to find your SERVER_IP
 From the browser, visit 
 - SERVER_IP:8086
 - SERVER_IP:3000
-- SERVER_IP:9090
 - SERVER_IP:8080
 
-And if you get **Influxdb**, **grafana**, **prometheus** and **cvat** everything is setup correctly.
+And if you get **Influxdb**, **grafana** and **cvat** everything is setup correctly.
 
 ---

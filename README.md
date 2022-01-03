@@ -15,8 +15,6 @@ Import Video feed from HLS Sink (server): [Video feed Guide.](https://github.com
 
 Import Data analysis metrics from Influxdb: [Influxdb Guide.](https://github.com/petoor/unforeseen-server/blob/main/INFLUXDB_GUIDE.md)
 
-Import SoC health metrics from Prometheus: [Prometheus Guide.](https://github.com/petoor/unforeseen-server/blob/main/PROMETHEUS_GUIDE.md)
-
 ---
 ### Endpoints.
 To find the SERVER_IP run `hostname -I | awk '{print $1}'`
@@ -27,9 +25,6 @@ The influxdb server used to store continuous data streams, can be found at SERVE
 
 ### Grafana.
 The Grafana server used to display the data, can be found at SERVER_IP:3000
-
-### Prometheus.
-The Prometheus server used to gather SoC health metrics can be found at SERVER_IP:9090
 
 ### Cvat.
 The Cvat server used to gather annotations used in AI models, can be found at SERVER_IP:8080
