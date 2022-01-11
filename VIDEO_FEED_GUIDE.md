@@ -9,7 +9,7 @@ or
 `python analysis/hello-world.py --pipeline analysis/pipelines/hello-world-mjpg.txt`
 
 and we assume your client http server is running, either as a cronjob (you can check this by running crontab -l and see that the job is listed)
-or by running python -m http.server 8080 where the index.html file is located.
+or by running `python -m http.server 8080` where the index.html file is located.
 
 # 1) HLS server video feed.
 
@@ -32,6 +32,6 @@ Go to CLIENT_IP:8080, if you can see a video player, the server should be workin
 - press apply
 ![Video success](media/guide/video_feed/video_success.png)
 
-You should now have a video feed window in grafana.
+You should now have a video feed window in grafana. Remember to press Save dashboard.
 
 **Note** Since the feed is a hls sink, the feed is delayed approximatly 20 seconds.
